@@ -1,0 +1,7 @@
+pandas
+numpy
+matplotlib
+sqlalchemy
+pymysql
+python-dotenv
+seaborn
