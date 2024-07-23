@@ -1,0 +1,29 @@
+services:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - 8000:80
+    environment:
+      - PMA_ARBITRARY=${PMA_ARBITRARY}
+      - PMA_HOST=${PMA_HOST}
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_AUTHENTICATION_PLUGIN: ${MYSQL_AUTHENTICATION_PLUGIN}
+    ports:
+      - 3306:3306
+    volumes:
+      - ./sql-scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db_data:/var/lib/mysql
+
+networks:
+  default:
+    name: bi-project-network
