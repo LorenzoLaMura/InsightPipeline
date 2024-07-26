@@ -87,5 +87,6 @@ send_email_task_success = EmailOperator(
 )
 
 # Define task dependencies
-extract_data_task >> transform_data_task >> load_data_task >> send_email_task_failure # If any task fails, send an email
-load_data_task >> send_email_task_success # If all tasks are completed, send an email of success
+extract_data_task >> transform_data_task >> load_data_task >> send_email_task_failure
+# If any task fails, send an email
+load_data_task >> send_email_task_success  # If all tasks are completed, send an email of success

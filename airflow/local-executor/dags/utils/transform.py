@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def transform_data(orders, categories, sellers, products):
     orders = fill_empty_cities(orders)
     merged_data = merge_data(orders, categories, sellers, products)
