@@ -1,0 +1,60 @@
+services:
+  zookeeper:
+    image: debezium/zookeeper:latest
+    ports:
+      - 2181:2181
+      - 2888:2888
+      - 3888:3888
+    networks:
+      - bi-project-network
+
+  kafka:
+    image: debezium/kafka:latest
+    ports:
+      - 9092:9092
+    depends_on:
+      - zookeeper
+    environment:
+      - ZOOKEEPER_CONNECT=zookeeper:2181
+    networks:
+      - bi-project-network
+
+  debezium:
+    image: debezium/connect:latest
+    ports:
+      - 8083:8083
+    depends_on:
+      - zookeeper
+      - kafka
+    environment:
+      - BOOTSTRAP_SERVERS=kafka:9092
+      - GROUP_ID=1
+      - CONFIG_STORAGE_TOPIC=my_connect_configs
+      - OFFSET_STORAGE_TOPIC=my_connect_offsets
+      - STATUS_STORAGE_TOPIC=my_connect_statuses
+      - CONNECT_KEY_CONVERTER_SCHEMAS_ENABLE=false
+      - CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE=false
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_PORT=${MYSQL_PORT}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_TABLES=${MYSQL_TABLES}
+    volumes:
+      - ./mysql-connector-config.json:/mysql-connector-config.json
+      - ./setup-connector.sh:/setup-connector.sh
+    # command: ["/bin/bash", "/setup-connector.sh"]
+    networks:
+      - bi-project-network
+
+  airflow-trigger:
+    build: .
+    depends_on:
+      - kafka
+      - debezium
+    networks:
+      - bi-project-network
+
+networks:
+  bi-project-network:
+    external: true

@@ -1,0 +1,21 @@
+{
+    "name": "mysql-connector",
+    "config": {
+        "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+        "database.hostname": "${MYSQL_HOST}",
+        "database.port": "${MYSQL_PORT}",
+        "database.user": "${MYSQL_USER}",
+        "database.password": "${MYSQL_PASSWORD}",
+        "database.server.id": "1",
+        "database.server.name": "mysqlserver1",
+        "database.include.list": "${MYSQL_DATABASE}",
+        "table.include.list": "${MYSQL_TABLES}",
+        "topic.prefix": "mysqlserver1",
+        "schema.history.internal.kafka.bootstrap.servers": "kafka:9092",
+        "schema.history.internal.kafka.topic": "schema-changes.${MYSQL_DATABASE}",
+        "database.history.store.only.captured.tables.ddl": "true",
+        "snapshot.mode": "when_needed",
+        "snapshot.locking.mode": "minimal",
+        "database.connectionTimeZone": "UTC"
+    }
+}
