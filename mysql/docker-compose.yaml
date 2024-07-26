@@ -23,6 +23,7 @@ services:
     volumes:
       - ./sql-scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./db_data:/var/lib/mysql
+      - ./mysql-config/my.cnf:/etc/mysql/conf.d/my.cnf:ro
 
 networks:
   default:
