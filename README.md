@@ -4,7 +4,7 @@
 
 Welcome to **InsightPipeline**! This project is all about transforming raw data into actionable insights through a seamless ETL (Extract, Transform, Load) process. By orchestrating data flows with Apache Airflow, analyzing data with Jupyter Notebooks, and visualizing results with Grafana, we bring data to life in a BI (Business Intelligence) dashboard.
 
-![Architecture](./images/BI_Project.jpg)
+![Architecture](./images/BI_Project-2.jpg)
 
 This project demonstrates a complete data engineering and data analysis workflow using Airflow and Grafana with Docker. It includes the following components:
 1. **MySQL** - To store raw and processed data.
